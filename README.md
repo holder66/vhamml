@@ -1,17 +1,17 @@
-[![VHamNN Continuous Integration](https://github.com/holder66/VHamNN/actions/workflows/VHamNN%20Continuous%20Integration.yml/badge.svg)](https://github.com/holder66/VHamNN/actions/workflows/VHamNN%20Continuous%20Integration.yml)
-![GitHub](https://img.shields.io/github/license/holder66/VHamNN)
-# VHamNN
-A Command Line Interface (CLI) app, for classification using a nearest neighbor algorithm based on Hamming distances. VHamNN makes use of the [holder66.hamnn ML library](https://github.com/holder66/hamnn).
+[![VHamML Continuous Integration](https://github.com/holder66/VHamML/actions/workflows/VHamML%20Continuous%20Integration.yml/badge.svg)](https://github.com/holder66/VHamML/actions/workflows/VHamML%20Continuous%20Integration.yml)
+![GitHub](https://img.shields.io/github/license/holder66/VHamML)
+# VHamML
+A Command Line Interface (CLI) app, for classification using a nearest neighbor algorithm based on Hamming distances. VHamML makes use of the [holder66.hamnn ML library](https://github.com/holder66/hamnn).
 
-You can use `VHamNN` with your own datasets, or with a selection of publicly available datasets that are widely used for demonstrating and testing ML classifiers, in the `datasets` directory. These files are either in [ARFF (Attribute-Relation File Format)](https://waikato.github.io/weka-wiki/formats_and_processing/arff_stable/) or in [Orange file format](https://orange3.readthedocs.io/projects/orange-data-mining-library/en/latest/reference/data.io.html).
+You can use `VHamML` with your own datasets, or with a selection of publicly available datasets that are widely used for demonstrating and testing ML classifiers, in the `datasets` directory. These files are either in [ARFF (Attribute-Relation File Format)](https://waikato.github.io/weka-wiki/formats_and_processing/arff_stable/) or in [Orange file format](https://orange3.readthedocs.io/projects/orange-data-mining-library/en/latest/reference/data.io.html).
 
 Classification accuracy with datasets in the `datasets` directory:
 See this [table](https://henry.olders.ca/wordpress/?p=1885)
 
-What, another AI package? [Is that necessary?](https://github.com/holder66/vhamnn/blob/master/AI_for_rest_of_us.md)
-And have a look here for a more complete [description and potential use cases](https://github.com/holder66/vhamnn/blob/master/description.md). 
+What, another AI package? [Is that necessary?](https://github.com/holder66/vhamml/blob/master/AI_for_rest_of_us.md)
+And have a look here for a more complete [description and potential use cases](https://github.com/holder66/vhamml/blob/master/description.md). 
 
-[Glossary of terms](https://github.com/holder66/vhamnn/blob/master/glossary.md)
+[Glossary of terms](https://github.com/holder66/vhamml/blob/master/glossary.md)
 
 ## Installation:
 First, install V, if not already installed. On MacOS, Linux etc. you need `git` and a C compiler (For windows or android environments, see the [v lang documentation](https://github.com/vlang/v/blob/master/doc/docs.md#windows)).
@@ -26,7 +26,7 @@ sudo ./v symlink	# add v to your PATH
 Clone this github repository:
 ```sh
 cd ~               # go back to your home directory
-git clone https://github.com/holder66/VHamNN
+git clone https://github.com/holder66/VHamML
 ```
 Install the HamNN library:
 ```sh
@@ -37,11 +37,11 @@ And the needed dependencies:
 v install vsl
 v install Mewzax.chalk
 ```
-Go into the vhamnn directory, compile the app, and try it out:
+Go into the vhamml directory, compile the app, and try it out:
 ```sh
-cd vhamnn
+cd vhamml
 v .                # compiles all the files in the folder
-./vhamnn --help    # displays help information about the various commands
+./vhamml --help    # displays help information about the various commands
                    # and options available. More specific help information
                    # is available for each command.
 ```
@@ -55,8 +55,8 @@ v run . examples go
 ## Updating:
 ```sh
 v up        # installs the latest release of V
-git pull    # When you're in the vhamnn directory, this command pulls in the 
-            # latest version of vhamnn
+git pull    # When you're in the vhamml directory, this command pulls in the 
+            # latest version of vhamml
 v update    # get the latest version of the libraries, including holder66.hamnn
 v .         # recompile
 ```
@@ -66,7 +66,7 @@ The V lang community meets on [Discord](https://discord.gg/vlang)
 
 For bug reports, feature requests, etc., please raise an issue on github:
 
-[for VHamNN](https://github.com/holder66/vhamnn)
+[for VHamML](https://github.com/holder66/vhamml)
 
 [for HamNN](https://github.com/holder66/hamnn)
 
@@ -81,21 +81,21 @@ v -prod .
 
 And then run it, eg 
 ```
-./vhamnn explore -s -c datasets/iris.tab
+./vhamml explore -s -c datasets/iris.tab
 ```
 
 ## Examples showing use of the Command Line Interface
-Please see [examples_of_command_line_usage.md](https://github.com/holder66/vhamnn/blob/master/examples_of_command_line_usage.md)
+Please see [examples_of_command_line_usage.md](https://github.com/holder66/vhamml/blob/master/examples_of_command_line_usage.md)
 
 ## Example: typical use case, a clinical risk calculator
 
 Health care professionals frequently make use of calculators to inform clinical decision-making. Data regarding symptoms, findings on physical examination, laboratory and imaging results, and outcome information such as diagnosis, risk for developing a condition, or response to specific treatments, is collected for a sample of patients, and then used to form the basis of a formula that can be used to predict the outcome information of interest for a new patient, based on how their symptoms and findings, etc. compare to those in the dataset.
 
-Please see [clinical_calculator_example.md](https://github.com/holder66/vhamnn/blob/master/clinical_calculator_example.md).
+Please see [clinical_calculator_example.md](https://github.com/holder66/vhamml/blob/master/clinical_calculator_example.md).
 
 ## Example: finding useful information embedded in noise
 
-Please see a worked example here: [noisy_data.md](https://github.com/holder66/vhamnn/blob/master/noisy_data.md)
+Please see a worked example here: [noisy_data.md](https://github.com/holder66/vhamml/blob/master/noisy_data.md)
 
 
 ## MNIST dataset
