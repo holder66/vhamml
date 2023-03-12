@@ -11,6 +11,7 @@ v run . analyze -s datasets/breast-cancer-wisconsin-disc.tab
 ```
 ```sh
 
+
 Analysis of Dataset "datasets/breast-cancer-wisconsin-disc.tab" (File Type orange_older)
 All Attributes
  Index  Name                          Count  Uniques  Missing      %  Type
@@ -50,7 +51,7 @@ The Class Attribute: "Class" (2 classes)
 Class Value           Cases
 benign                  458
 malignant               241
-processing time: 0 hrs 0 min  0.069 sec
+processing time: 0 hrs 0 min  0.086 sec
 
 ```
 
@@ -64,83 +65,104 @@ v run . rank  -s datasets/breast-cancer-wisconsin-disc.tab
 Attributes Sorted by Rank Value, for "datasets/breast-cancer-wisconsin-disc.tab"
 Missing values: included
 Bin range for continuous attributes: from 0 to 0 with interval 0
- Index  Name                         Type   Rank Value   Bins
-     2  Uniformity of Cell Size      D           86.07      0
-     3  Uniformity of Cell Shape     D           84.26      0
-     6  Bare Nuclei                  D           81.35      0
-     5  Single Epithelial Cell Size  D           79.34      0
-     7  Bland Chromatin              D           76.96      0
-     8  Normal Nucleoli              D           74.82      0
-     4  Marginal Adhesion            D           68.60      0
-     1  Clump Thickness              D           63.99      0
-     9  Mitoses                      D           41.56      0
+Unweighted by class prevalences
+         Name                         Index  Type   Rank Value   Bins
+     1   Uniformity of Cell Size          2  D           85.41      0
+     2   Uniformity of Cell Shape         3  D           84.55      0
+     3   Bare Nuclei                      6  D           82.26      0
+     4   Bland Chromatin                  7  D           81.40      0
+     5   Single Epithelial Cell Size      5  D           79.11      0
+     6   Normal Nucleoli                  8  D           79.11      0
+     7   Marginal Adhesion                4  D           72.82      0
+     8   Clump Thickness                  1  D           72.25      0
+     9   Mitoses                          9  D           57.94      0
 processing time: 0 hrs 0 min  0.007 sec
+
 ```
 
 We can run a set of exploratory cross-validations using leave-one-out
 folding, and with the -w flag to weight the results using class prevalences.
 
 ```sh
-v run . explore -w -x -c -e -g datasets/breast-cancer-wisconsin-disc.tab
+v run . explore -w -wr -x -c -e -g datasets/breast-cancer-wisconsin-disc.tab
 ```
-Note the additional flags: -x to exclude missing values; -c to exploit 
-parallel processing by using all the available CPU cores on your machine;
--e to show extended results; -g to have plots of the results.
+Note the additional flags: -w to prevalence-weight nearest neighbor counts; -wr to prevalence-weight when ranking attributes; -x to exclude missing values; -c to exploit parallel processing by using all the available CPU cores on your machine; -e to show extended results; -g to have plots of the results.
 ```sh
 
 Explore leave-one-out cross-validation using classifiers from "datasets/breast-cancer-wisconsin-disc.tab"
-No continuous attributes, thus no binning
+Number of attributes: all
+Binning range for continuous attributes: not applicable (no continuous attributes used)
 Missing values: excluded
-Weighting nearest neighbor counts by class prevalences
+Purging of duplicate instances: false
+Prevalence weighting for ranking attributes: true
+Prevalence weighting for nearest neighbor counts: true
+Add instances to balance class prevalences: false
 Over attribute range from 1 to 9 by interval 1
-Purging of duplicate instances: off
 A correct classification to "malignant" is a True Positive (TP);
 A correct classification to "benign" is a True Negative (TN).
-Note: for binary classification, balanced accuracy = (sensitivity + specificity) / 2
-Attributes    Bins     TP    FP    TN    FN  Sens'y Spec'y PPV    NPV    F1 Score  Raw Acc'y  Bal'd
-         1            229    12   417    41  0.848  0.972  0.950  0.910  0.896      92.42%   91.01%
-         2            231    10   428    30  0.885  0.977  0.959  0.934  0.920      94.28%   93.11%
-         3            226    15   439    19  0.922  0.967  0.938  0.959  0.930      95.14%   94.47%
-         4            227    14   439    19  0.923  0.969  0.942  0.959  0.932      95.28%   94.59%
-         5            224    17   442    16  0.933  0.963  0.929  0.965  0.931      95.28%   94.81%
-         6            218    23   444    14  0.940  0.951  0.905  0.969  0.922      94.71%   94.52%
-         7            221    20   445    13  0.944  0.957  0.917  0.972  0.931      95.28%   95.07%
-         8            224    17   445    13  0.945  0.963  0.929  0.972  0.937      95.71%   95.42%
-         9            227    14   445    13  0.946  0.969  0.942  0.972  0.944      96.14%   95.77%
+Attributes    Bins     TP    FN    TN    FP  Sens'y Spec'y    PPV    NPV  F1 Score  Accuracy: Raw  Balanced
+         1            229    12   417    41   0.950  0.910  0.848  0.972     0.896         92.42%    93.03%
+         2            231    10   428    30   0.959  0.934  0.885  0.977     0.920         94.28%    94.65%
+         3            226    15   439    19   0.938  0.959  0.922  0.967     0.930         95.14%    94.81%
+         4            227    14   439    19   0.942  0.959  0.923  0.969     0.932         95.28%    95.02%
+         5            224    17   442    16   0.929  0.965  0.933  0.963     0.931         95.28%    94.73%
+         6            218    23   444    14   0.905  0.969  0.940  0.951     0.922         94.71%    93.70%
+         7            221    20   445    13   0.917  0.972  0.944  0.957     0.931         95.28%    94.43%
+         8            224    17   445    13   0.929  0.972  0.945  0.963     0.937         95.71%    95.05%
+         9            227    14   445    13   0.942  0.972  0.946  0.969     0.944         96.14%    95.68%
+Command line arguments: ['explore', '-w', '-wr', '-x', '-c', '-e', '-g', 'datasets/breast-cancer-wisconsin-disc.tab']
+Maximum accuracies obtained:
+                raw accuracy:  96.14% [227, 14, 445, 13] using 9 attributes
+           balanced accuracy:  95.68% [227, 14, 445, 13] using 9 attributes
+              true positives:     231 [231, 10, 428, 30] using 2 attributes
+              true negatives:     445 [221, 20, 445, 13] using 7 attributes
 
 
-processing time: 0 hrs 0 min  9.276 sec
+
+processing time: 0 hrs 0 min  8.043 sec
+
 ```
 
-While using all 9 attributes gives the best classification result (balanced accuracy 95.77%; F1 Score 0.944) using only 2 attributes gives the lowest false positive rate.
+While using all 9 attributes gives the best classification result (balanced accuracy 95.68%; F1 Score 0.944) using only 2 attributes gives the lowest false positive rate.
 It is possible that a number of the instances in this dataset are duplicates, ie have the same values. Let's redo the explore but with the -p or --purge flag:
 
 ```sh
-v run . explore -w -x -c -e -g -p datasets/breast-cancer-wisconsin-disc.tab
+v run . explore -w -wr -x -c -e -g -p datasets/breast-cancer-wisconsin-disc.tab
 ```
 ```sh
+
 Explore leave-one-out cross-validation using classifiers from "datasets/breast-cancer-wisconsin-disc.tab"
-No continuous attributes, thus no binning
+Number of attributes: all
+Binning range for continuous attributes: not applicable (no continuous attributes used)
 Missing values: excluded
-Weighting nearest neighbor counts by class prevalences
+Purging of duplicate instances: true
+Prevalence weighting for ranking attributes: true
+Prevalence weighting for nearest neighbor counts: true
+Add instances to balance class prevalences: false
 Over attribute range from 1 to 9 by interval 1
-Purging of duplicate instances: on
 A correct classification to "malignant" is a True Positive (TP);
 A correct classification to "benign" is a True Negative (TN).
-Note: for binary classification, balanced accuracy = (sensitivity + specificity) / 2
-Attributes    Bins      Purged instances      (%)     TP    FP    TN    FN  Sens'y Spec'y PPV    NPV    F1 Score  Raw Acc'y  Bal'd
-         1              624.1 out of 698 ( 89.4%)    229    12   414    44  0.839  0.972  0.950  0.904  0.891      91.99%   90.53%
-         2              551.0 out of 698 ( 78.9%)    229    12   427    31  0.881  0.973  0.950  0.932  0.914      93.85%   92.67%
-         3              468.2 out of 698 ( 67.1%)    226    15   431    27  0.893  0.966  0.938  0.941  0.915      93.99%   92.98%
-         4              402.3 out of 698 ( 57.6%)    227    14   439    19  0.923  0.969  0.942  0.959  0.932      95.28%   94.59%
-         5              335.4 out of 698 ( 48.1%)    224    17   441    17  0.929  0.963  0.929  0.963  0.929      95.14%   94.62%
-         6              312.5 out of 698 ( 44.8%)    220    21   443    15  0.936  0.955  0.913  0.967  0.924      94.85%   94.55%
-         7              284.5 out of 698 ( 40.8%)    221    20   444    14  0.940  0.957  0.917  0.969  0.929      95.14%   94.87%
-         8              212.6 out of 698 ( 30.5%)    224    17   444    14  0.941  0.963  0.929  0.969  0.935      95.57%   95.22%
-         9              209.6 out of 698 ( 30.0%)    227    14   444    14  0.942  0.969  0.942  0.969  0.942      95.99%   95.57%
+Attributes    Bins        Purged instances     (%)     TP    FN    TN    FP  Sens'y Spec'y    PPV    NPV  F1 Score  Accuracy: Raw  Balanced
+         1              624.1 out of 698.0 (89.41)    229    12   414    44   0.950  0.904  0.839  0.972     0.891         91.99%    92.71%
+         2              551.0 out of 698.0 (78.94)    229    12   427    31   0.950  0.932  0.881  0.973     0.914         93.85%    94.13%
+         3              468.2 out of 698.0 (67.08)    226    15   431    27   0.938  0.941  0.893  0.966     0.915         93.99%    93.94%
+         4              402.3 out of 698.0 (57.64)    227    14   439    19   0.942  0.959  0.923  0.969     0.932         95.28%    95.02%
+         5              335.4 out of 698.0 (48.05)    224    17   441    17   0.929  0.963  0.929  0.963     0.929         95.14%    94.62%
+         6              312.5 out of 698.0 (44.76)    220    21   443    15   0.913  0.967  0.936  0.955     0.924         94.85%    94.01%
+         7              284.5 out of 698.0 (40.76)    221    20   444    14   0.917  0.969  0.940  0.957     0.929         95.14%    94.32%
+         8              212.6 out of 698.0 (30.46)    224    17   444    14   0.929  0.969  0.941  0.963     0.935         95.57%    94.94%
+         9              209.6 out of 698.0 (30.03)    227    14   444    14   0.942  0.969  0.942  0.969     0.942         95.99%    95.57%
+Command line arguments: ['explore', '-w', '-wr', '-x', '-c', '-e', '-g', '-p', 'datasets/breast-cancer-wisconsin-disc.tab']
+Maximum accuracies obtained:
+                raw accuracy:  95.99% [227, 14, 444, 14] using 9 attributes, 30.03% instances purged.
+           balanced accuracy:  95.57% [227, 14, 444, 14] using 9 attributes, 30.03% instances purged.
+              true positives:     229 [229, 12, 414, 44] using 1 attributes, 89.41% instances purged.
+              true negatives:     444 [221, 20, 444, 14] using 7 attributes, 40.76% instances purged.
 
 
-processing time: 0 hrs 0 min 42.989 sec
+
+processing time: 0 hrs 0 min 41.292 sec
+
 ```
 
 We can see that deleting duplicate instances each time a classifier is built increases processing time, and reduces balaned accuracy by a small amount. Nevertheless, deleting so many instances will make the eventual classifier considerably smaller in terms of memory footprint, and therefore faster classifications.
@@ -149,16 +171,19 @@ Picking the best combination of attributes to be used, and bin range when there 
 For the purposes of this example, however, let us train our classifier using 4 attributes, with purging of duplicates:
 
 ```sh
-v run . make -a 4 -w -s -p datasets/breast-cancer-wisconsin-disc.tab
+v run . make -a 4 -w -wr -s -p datasets/breast-cancer-wisconsin-disc.tab
 ```
 ```sh
 
-Classifier for "datasets/breast-cancer-wisconsin-disc.tab"
-Attributes: 4
+
+Classifier from "datasets/breast-cancer-wisconsin-disc.tab"
+Number of attributes: 4
+Binning range for continuous attributes: from 1 to 16 with interval 1
 Missing values: included
-No continuous attributes, thus no binning
-Prevalence weighting of nearest neighbor counts: yes 
-Purging of duplicate instances: on
+Purging of duplicate instances: true
+Prevalence weighting for ranking attributes: true
+Prevalence weighting for nearest neighbor counts: true
+Add instances to balance class prevalences: false
 Index  Attribute                   Type  Rank Value   Uniques       Min        Max  Bins
     2  Uniformity of Cell Size     D          86.07        10
     3  Uniformity of Cell Shape    D          84.26        10
@@ -167,15 +192,15 @@ Index  Attribute                   Type  Rank Value   Uniques       Min        M
 
 Classifier History:
 Date & Time (UTC)    Event   From file                   Original Instances  After purging
-2022-07-30 22:12:48  make    datasets/breast-cancer-wisconsin-disc.tab        699            296
-processing time: 0 hrs 0 min  0.072 sec
+2023-03-12 12:42:09  make    datasets/breast-cancer-wisconsin-disc.tab        699            296
+processing time: 0 hrs 0 min  0.095 sec
 
 ```
 
 We can use this trained classifier as a clinical calculator, to classify a new sample of breast tissue (with values of 8, 9, 7, and 8 for the four attributes identified above) as either malignant or benign:
 
 ```sh
-v run . query -a 4 -w -p datasets/breast-cancer-wisconsin-disc.tab
+v run . query -a 4 -w -wr -p datasets/breast-cancer-wisconsin-disc.tab
 ```
 ```sh
 
@@ -193,8 +218,10 @@ Uniformity of Cell Shape 9
 Bare Nuclei        7
 Single Epithelial Cell Size 8
 Do you want to proceed? (y/n) y
-For the classes ['benign', 'malignant'] the prevalence-weighted nearest neighbor counts are [0, 1832], so the inferred class is 'malignant'
-processing time: 0 hrs 0 min 45.429 sec
+For the classes ['benign', 'malignant'] the prevalence-weighted nearest neighbor counts are [0, 1832], 
+so the inferred class is 'malignant'
+processing time: 0 hrs 0 min 40.541 sec
+
 ```
 
 The classifier imputes the class of the new sample as malignant. This is based on finding 1832 "malignant" nearest neighbours, vs no "benign" nearest neighbours (weighted values; without weighting by class prevalence, the nearest
@@ -203,9 +230,8 @@ neighbour counts would be 4 for malignant and 0 for benign).
 In the real world, important information may not be available. Suppose we have a breast tissue sample where we only have information on the uniformity of cell shape which has a value of 2, and single epithelial cell size with a value of 3:
 
 ```sh
-v run . query -a 4 -w -p datasets/breast-cancer-wisconsin-disc.tab
+v run . query -a 4 -w -wr -p datasets/breast-cancer-wisconsin-disc.tab
 ```
-```sh
 Possible values for "Uniformity of Cell Size": ['1', '10', '2', '3', '4', '5', '6', '7', '8', '9']
 Please enter one of these values for attribute "Uniformity of Cell Size": 
 Possible values for "Uniformity of Cell Shape": ['1', '10', '2', '3', '4', '5', '6', '7', '8', '9']
@@ -220,8 +246,10 @@ Uniformity of Cell Shape 2
 Bare Nuclei        
 Single Epithelial Cell Size 3
 Do you want to proceed? (y/n) y
-For the classes ['benign', 'malignant'] the prevalence-weighted nearest neighbor counts are [241, 0], so the inferred class is 'benign'
-processing time: 0 hrs 0 min 13.841 sec
+For the classes ['benign', 'malignant'] the prevalence-weighted nearest neighbor counts are [241, 0], 
+so the inferred class is 'benign'
+processing time: 0 hrs 0 min 36.359 sec
+
 
 ```
 
