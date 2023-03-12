@@ -187,7 +187,8 @@ Options:
   -e --expanded: display the classifier struct on the console.
   -o --output: followed by the path to a file in which the classifier will be stored;
   -p --purge: remove instances which are duplicates after binning;
-  -x --exclude: exclude missing values from rank value calculations;
+  -wr: when ranking attributes, weight contributions by class prevalences;
+  -x --exclude: exclude missing values from rank value calculations.
     '
 
 	query_help = '
@@ -203,9 +204,10 @@ applicable.
 Options:
   -k --classifier, followed by the path to a classifier file.
   -o --output, followed by the path for saving the instance file.
-    -v --verbose, show additional information for each query, and additional 
+  -v --verbose, show additional information for each query, and additional 
     statistics for the classification.
-    -w --weight, weight the number of nearest neighbor counts by class prevalences.
+  -w --weight, weight the number of nearest neighbor counts by class prevalences;
+  -wr, when ranking attributes, weight contributions by class prevalences.
     '
 
 	orange_help = "
@@ -264,7 +266,8 @@ both the classification and the verification datafile.
 -k --classifier, followed by the path to a file for a saved Classifier;
     can be used instead of the training dataset;
 -w --weight, weight the number of nearest neighbor counts
-    by class prevalences when classifying.
+    by class prevalences when classifying;
+-wr, when ranking attributes, weight contributions by class prevalences.
     '
 
 	validate_help = '
@@ -294,7 +297,8 @@ Options:
   -e --expanded: display the ValidateResult struct on the console;
   -k --classifier: followed by the path to a file for a saved Classifier;
   -w --weight: weight the number of nearest neighbor counts
-  by class prevalences when classifying.
+  by class prevalences when classifying;
+  -wr: when ranking attributes, weight contributions by class prevalences.
   '
 
 	cross_help = '
@@ -331,9 +335,10 @@ Options:
   -f --folds: number of cross-validation folds (default is leave-one-out);
   -p --purge: remove instances which are duplicates after binning;
   -r --reps: number of repetitions; if > 1, a random selection of 
-      instances to be included in each fold will be applied (TODO);
+      instances to be included in each fold will be applied;
   -w --weight: weight the number of nearest neighbor counts by 
       class prevalences;
+  -wr, when ranking attributes, weight contributions by class prevalences;
   -x --exclude: exclude missing values from rank value calculations;
 
 '
@@ -368,6 +373,7 @@ Options:
       for all attributes on a given cross-validation or verification;
   -w --weight, weight the number of nearest neighbor counts by 
       class prevalences;
+  -wr, when ranking attributes, weight contributions by class prevalences;
   -x --exclude, exclude missing values from rank value calculations;
 '
 )

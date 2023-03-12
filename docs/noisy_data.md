@@ -12,58 +12,64 @@ To try the example on your own installation, start by compiling an optimized ver
 Note: processing times are on a 2019 Macbook Pro.
 
 ```sh
-./vhamnn rank -w -s datasets/prostata.tab 
+./vhamml rank -w -wr -s datasets/prostata.tab 
 ```   
 ```sh
 
 Attributes Sorted by Rank Value, for "datasets/prostata.tab"
 Missing values: included
-Bin range for continuous attributes: from 2 to 16 with interval 1
- Index  Name                         Type   Rank Value   Bins
- 10426  NELL2                        C           80.15      9
-  6117  HPN                          C           78.15      7
-  9104  PTGDS                        C           74.62      6
-  6394  RBP1                         C           74.23     13
- 10070  CALM1_4                      C           72.85     13
-  8897  HSPD1                        C           72.77     13
-  4297  TRGC2                        C           70.85     11
+Bin range for continuous attributes: from 1 to 16 with interval 1
+Weighted by class prevalences
+         Name                         Index  Type   Rank Value   Bins
+     1   NELL2                        10426  C           80.15      9
+     2   HPN                           6117  C           78.15      7
+     3   PTGDS                         9104  C           74.62      6
+     4   RBP1                          6394  C           74.23     13
+     5   CALM1_4                      10070  C           72.85     13
+     6   HSPD1                         8897  C           72.77     13
+     7   TRGC2                         4297  C           70.85     11
+     8   TGFB3                        10888  C           70.69     13
+     9   DF                            9782  C           70.62     15
+    10   SERPINF1                      7179  C           70.38     12
+    11   PDLIM5_4                      8782  C           69.23     12
+    12   CRYAB_2                       7489  C           68.85      5
 	...
 	...
 	...
-  2048  MR1_3                        C            8.77     16
-  4056  CPA2                         C            8.54     13
-  5692  SEDLP                        C            8.08     14
-  4163  PIP                          C            2.00      2
-  4852  SEMG2                        C            2.00      2
-  7529  SEMG1                        C            2.00      2
-processing time: 0 hrs 0 min  1.358 sec
+ 12528   MR1_3                         2048  C            8.77     16
+ 12529   CPA2                          4056  C            8.54     13
+ 12530   SEDLP                         5692  C            8.08     14
+ 12531   PIP                           4163  C            2.00      2
+ 12532   SEMG2                         4852  C            2.00      2
+ 12533   SEMG1                         7529  C            2.00      2
+processing time: 0 hrs 0 min  1.518 sec
 
 ```
 
 Accumulated experience with the algorithm suggests that using a fixed number
 of bins often gives good results. 
 ```sh
-./vhamnn rank -w -s -b 6 datasets/prostata.tab
+./vhamml rank -w -wr -s -b 6 datasets/prostata.tab
 ```
 ```sh
-
 Attributes Sorted by Rank Value, for "datasets/prostata.tab"
 Missing values: included
-Bin range for continuous attributes: from 2 to 6 with interval 1
- Index  Name                         Type   Rank Value   Bins
-  9104  PTGDS                        C           74.62      6
-  6117  HPN                          C           74.54      5
-  8897  HSPD1                        C           71.08      2
-  8782  PDLIM5_4                     C           69.15      4
-  7489  CRYAB_2                      C           68.85      5
+Bin range for continuous attributes: from 1 to 6 with interval 1
+Weighted by class prevalences
+         Name                         Index  Type   Rank Value   Bins
+     1   PTGDS                         9104  C           74.62      6
+     2   HPN                           6117  C           74.54      5
+     3   HSPD1                         8897  C           71.08      2
+     4   PDLIM5_4                      8782  C           69.15      4
+     5   CRYAB_2                       7489  C           68.85      5
    ...
    ...
    ...
-  7529  SEMG1                        C            2.00      2
-  8486  AKR1B1                       C            2.00      2
- 12313  325_s_at                     C            2.00      2
-   410  PIN1L                        C            2.00      3
-processing time: 0 hrs 0 min  0.649 sec
+ 12530   SEMG1                         7529  C            2.00      2
+ 12531   AKR1B1                        8486  C            2.00      2
+ 12532   325_s_at                     12313  C            2.00      2
+ 12533   PIN1L                          410  C            2.00      3
+processing time: 0 hrs 0 min  0.724 sec
 ```
 
 We can verify this by comparing cross-validation results over a range of 
@@ -73,7 +79,7 @@ which is optimized over a range.
 Here are the results for exploring over a range of attributes from 1 to 20, 
 and a binning range from 2 to 12:
 ```sh
-./vhamnn explore -c -e -g -w -b 2,12 -a 1,20 datasets/prostata.tab
+./vhamml explore -e -g -w -wr -b 2,12 -a 1,20 datasets/prostata.tab
 ```
 Note the flags: -c calls for parallel processing, using all available CPU cores
 on you machine; -e for expanded output to the console; -g results in graphical
@@ -326,7 +332,7 @@ all continuous attributes in some cases provides better results. We can try this
 with the -u flag, over an abbreviated range of attributes and bins:
 
 ```sh
-./vhamnn explore -c -e -g -w -b 6,12 -a 3,5 -u datasets/prostata.tab
+./vhamml explore -e -g -w -wr -b 6,12 -a 3,5 -u datasets/prostata.tab
 ```
 ```sh
 
@@ -371,42 +377,47 @@ It turns out that three attributes and 6 bins for all attributes,
 gives us the best balanced accuracy of 94.33%, marginally better than when using a range of bins. 
 
 Using the "cross" command with the -e flag provides additional statistics, including a confusion matrix:
+```sh
 
-`./vhamnn cross -b 6,6 -a 3 -e datasets/prostata.tab`
+./vhamml cross -b 6,6 -a 3 -e -w -wr datasets/prostata.tab
+```
 
 ```sh
+
 Cross-validation of "datasets/prostata.tab"
 Partitioning: leave-one-out
-Attributes: 3
+Number of attributes: 3
+Binning range for continuous attributes: from 6 to 6 with interval 1
 Missing values: included
-Bin range for continuous attributes: from 6 to 6 with interval 1
-Prevalence weighting of nearest neighbor counts: no 
-Results:
+Purging of duplicate instances: false
+Prevalence weighting for ranking attributes: true
+Prevalence weighting for nearest neighbor counts: true
+Add instances to balance class prevalences: false
 Results:
     Class                   Instances    True Positives    Precision    Recall    F1 Score
     normal                         50      49 ( 98.00%)        0.907     0.980       0.942
     tumor                          52      47 ( 90.38%)        0.979     0.904       0.940
-        Totals                    102      96 (accuracy: raw: 94.12% multiclass balanced: 94.19%)
+        Totals                    102      96 (accuracy: raw: 94.12% balanced: 94.19%)
              Macro Averages:                                   0.943     0.942       0.941
           Weighted Averages:                                   0.944     0.941       0.941
 A correct classification to "normal" is a True Positive (TP);
 A correct classification to "tumor" is a True Negative (TN).
-Note: for binary classification, balanced accuracy = (sensitivity + specificity) / 2
-   TP    FP    TN    FN  Sens'y Spec'y PPV    NPV    F1 Score  Raw Acc'y  Bal'd
-   49     1    47     5  0.907  0.979  0.980  0.904  0.942      94.12%   94.33%
+   TP    FN    TN    FP  Sens'y Spec'y    PPV    NPV  F1 Score  Accuracy: Raw  Balanced
+   49     1    47     5   0.980  0.904  0.907  0.979     0.942         94.12%    94.19%
 Confusion Matrix:
 Predicted Classes (columns)       normal      tumor
       Actual Classes (rows)
                      normal           49          1
                       tumor            5         47
-processing time: 0 hrs 0 min 29.557 sec
+processing time: 0 hrs 0 min 33.505 sec
+
 ```
 
 Let's stick with these settings, and create a classifier that
 can be used for predicting outcomes:
 
 ```sh
-./vhamnn make -a 3 -b 6 -u -c -o ../classifiers/prostata_classifier datasets/prostata.tab
+./vhamml make -a 3 -b 6 -u -c -o ../classifiers/prostata_classifier datasets/prostata.tab
 ```
 
 Note the use of the -o flag to specify a file where the classifier is to be saved in a file for later use.
