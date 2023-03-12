@@ -232,6 +232,7 @@ In the real world, important information may not be available. Suppose we have a
 ```sh
 v run . query -a 4 -w -wr -p datasets/breast-cancer-wisconsin-disc.tab
 ```
+```sh
 Possible values for "Uniformity of Cell Size": ['1', '10', '2', '3', '4', '5', '6', '7', '8', '9']
 Please enter one of these values for attribute "Uniformity of Cell Size": 
 Possible values for "Uniformity of Cell Shape": ['1', '10', '2', '3', '4', '5', '6', '7', '8', '9']
