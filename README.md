@@ -10,10 +10,10 @@ You can use `VHamML` with your own datasets, or with a selection of publicly ava
 Classification accuracy with datasets in the `datasets` directory:
 See this [table](https://henry.olders.ca/wordpress/?p=1885)
 
-What, another AI package? [Is that necessary?](https://github.com/holder66/vhamml/blob/master/AI_for_rest_of_us.md)
+What, another AI package? [Is that necessary?](https://github.com/holder66/vhamml/blob/master/docs/AI_for_rest_of_us.md)
 And have a look here for a more complete [description and potential use cases](https://github.com/holder66/vhamml/blob/master/description.md). 
 
-[Glossary of terms](https://github.com/holder66/vhamml/blob/master/glossary.md)
+[Glossary of terms](https://github.com/holder66/vhamml/blob/master/docs/glossary.md)
 
 ## Installation:
 First, install V, if not already installed. On MacOS, Linux etc. you need `git` and a C compiler (For windows or android environments, see the [v lang documentation](https://github.com/vlang/v/blob/master/doc/docs.md#windows)).
@@ -66,13 +66,11 @@ For bug reports, feature requests, etc., please raise an issue on github:
 
 [for VHamML](https://github.com/holder66/vhamml)
 
-[for HamNN](https://github.com/holder66/hamnn)
-
 
 ## Speed things up:
 
-Make sure you use the -c (--concurrent) flag to make use of available CPU cores.
-Another huge speedup happens if you compile using the -prod (for production) option. The compilation itself takes longer, but the resulting code is highly optimized.
+Using the -c (--concurrent) flag makes use of available CPU cores may speed things up.
+A huge speedup happens if you compile using the -prod (for production) option. The compilation itself takes longer, but the resulting code is highly optimized.
 ```
 v -prod .
 ```
@@ -83,7 +81,7 @@ And then run it, eg
 ```
 
 ## Examples showing use of the Command Line Interface
-Please see [examples_of_command_line_usage.md](https://github.com/holder66/vhamml/blob/master/examples_of_command_line_usage.md)
+Please see [examples_of_command_line_usage.md](https://github.com/holder66/vhamml/blob/master/docs/examples_of_command_line_usage.md)
 
 ## Example: typical use case, a clinical risk calculator
 
@@ -93,7 +91,7 @@ Please see [clinical_calculator_example.md](https://github.com/holder66/vhamml/b
 
 ## Example: finding useful information embedded in noise
 
-Please see a worked example here: [noisy_data.md](https://github.com/holder66/vhamml/blob/master/noisy_data.md)
+Please see a worked example here: [noisy_data.md](https://github.com/holder66/vhamml/blob/master/docs/noisy_data.md)
 
 
 ## MNIST dataset
@@ -109,4 +107,4 @@ The process of development in its early stages is described in [this essay](http
 
 
 
-Copyright (c) 2017, 2022: Henry Olders.
+Copyright (c) 2017, 2023: Henry Olders.
