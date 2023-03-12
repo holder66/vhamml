@@ -11,7 +11,7 @@ Classification accuracy with datasets in the `datasets` directory:
 See this [table](https://henry.olders.ca/wordpress/?p=1885)
 
 What, another AI package? [Is that necessary?](https://github.com/holder66/vhamml/blob/master/docs/AI_for_rest_of_us.md)
-And have a look here for a more complete [description and potential use cases](https://github.com/holder66/vhamml/blob/master/description.md). 
+And have a look here for a more complete [description and potential use cases](https://github.com/holder66/vhamml/blob/master/docs/description.md). 
 
 [Glossary of terms](https://github.com/holder66/vhamml/blob/master/docs/glossary.md)
 
