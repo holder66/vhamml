@@ -89,7 +89,7 @@ Please see [examples_of_command_line_usage.md](https://github.com/holder66/vhamm
 
 Health care professionals frequently make use of calculators to inform clinical decision-making. Data regarding symptoms, findings on physical examination, laboratory and imaging results, and outcome information such as diagnosis, risk for developing a condition, or response to specific treatments, is collected for a sample of patients, and then used to form the basis of a formula that can be used to predict the outcome information of interest for a new patient, based on how their symptoms and findings, etc. compare to those in the dataset.
 
-Please see [clinical_calculator_example.md](https://github.com/holder66/vhamml/docs/blob/master/clinical_calculator_example.md).
+Please see [clinical_calculator_example.md](https://github.com/holder66/vhamml/blob/master/docs/clinical_calculator_example.md).
 
 ## Example: finding useful information embedded in noise
 
