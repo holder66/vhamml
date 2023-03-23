@@ -114,6 +114,7 @@ pub fn cross_validate(ds Dataset, opts Options) CrossVerifyResult {
 		cross_result.binning = repetition_result.binning
 		cross_result.classifier_instances_counts << repetition_result.classifier_instances_counts
 		cross_result.prepurge_instances_counts_array << repetition_result.prepurge_instances_counts_array
+		cross_result.maximum_hamming_distance = repetition_result.maximum_hamming_distance
 	}
 	cross_result = summarize_results(repeats, mut cross_result)
 	cross_result.Metrics = get_metrics(cross_result)
@@ -188,8 +189,10 @@ fn do_repetition(pick_list []int, rep int, ds Dataset, cross_opts Options) ?Cros
 			repetition_result.binning = fold_result.binning
 			repetition_result.classifier_instances_counts << fold_result.classifier_instances_counts
 			repetition_result.prepurge_instances_counts_array << fold_result.prepurge_instances_counts_array
+			repetition_result.maximum_hamming_distance = fold_result.maximum_hamming_distance
 		}
 	}
+	// println('repetition_result.maximum_hamming_distance: ${repetition_result.maximum_hamming_distance}')
 	// println(arrays.sum(repetition_result.classifier_instances_counts) or {0} / f64(repetition_result.classifier_instances_counts.len))
 	return repetition_result
 }
@@ -279,8 +282,9 @@ fn do_one_fold(pick_list []int, current_fold int, folds int, ds Dataset, cross_o
 	}
 	if !cross_opts.multiple_flag {
 		part_cl := make_classifier(mut part_ds, cross_opts)
-		// println(part_cl.history)
+		// println('part_cl.maximum_hamming_distance: ${part_cl.maximum_hamming_distance}')
 		fold_result.binning = part_cl.binning
+		fold_result.maximum_hamming_distance = part_cl.maximum_hamming_distance
 
 		fold_result.classifier_instances_counts << part_cl.instances.len
 		fold_result.prepurge_instances_counts_array << part_cl.history[0].prepurge_instances_count
@@ -309,6 +313,7 @@ fn do_one_fold(pick_list []int, current_fold int, folds int, ds Dataset, cross_o
 			mult_opts.Parameters = params
 			fold_result.Parameters = params
 			part_cl := make_classifier(mut part_ds, mult_opts)
+			println(part_cl)
 			classifier_array << part_cl
 			byte_values_array = [][]u8{}
 			for attr in part_cl.attribute_ordering {
@@ -322,6 +327,7 @@ fn do_one_fold(pick_list []int, current_fold int, folds int, ds Dataset, cross_o
 		fold_result = multiple_classify_in_cross(current_fold, classifier_array, transpose(instances_to_be_classified), mut
 			fold_result, mult_opts)
 	}
+	// println('fold_result.maximum_hamming_distance: ${fold_result.maximum_hamming_distance}')
 	return fold_result
 }
 

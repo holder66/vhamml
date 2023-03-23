@@ -125,6 +125,7 @@ pub mut:
 	repetitions              int
 	random_pick              bool
 	balance_prevalences_flag bool
+	maximum_hamming_distance int 
 }
 
 struct DisplaySettings {
