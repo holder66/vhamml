@@ -135,6 +135,7 @@ pub fn verify(opts Options) CrossVerifyResult {
 // generate_test_instances_array
 fn generate_test_instances_array(cl Classifier, test_ds Dataset) [][]u8 {
 	// for each usable attribute in cl, massage the equivalent test_ds attribute
+	println(cl)
 	mut test_binned_values := []int{}
 	mut test_attr_binned_values := [][]u8{}
 	mut test_index := 0

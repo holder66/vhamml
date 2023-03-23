@@ -94,6 +94,7 @@ pub mut:
 	datafile_path      string
 	attribute_ordering []string
 	trained_attributes map[string]TrainedAttribute
+	maximum_hamming_distance int
 	indices            []int
 	instances          [][]u8
 	history            []HistoryEvent

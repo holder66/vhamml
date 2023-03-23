@@ -35,11 +35,13 @@ fn test_make_classifier() ? {
 	}
 	assert cl.lcm_class_counts == 24
 	assert cl.attribute_ordering == ['height', 'negative', 'weight', 'number', 'age', 'lastname']
+	assert cl.maximum_hamming_distance == 54
 
 	opts.bins = [5, 5]
 	opts.number_of_attributes = [1]
 	ds = load_file('datasets/leukemia34test.tab')
 	cl = make_classifier(mut ds, opts)
+	assert cl.maximum_hamming_distance == 5
 	assert cl.Class == Class{
 		class_name: 'gene'
 		classes: ['ALL', 'AML']
@@ -88,6 +90,7 @@ fn test_save_classifier() ? {
 		number_of_attributes: [6]
 		show_flag: false
 		weighting_flag: true
+		weight_ranking_flag: true
 		outputfile_path: 'tempfolder2/classifierfile'
 	}
 	opts.classifierfile_path = opts.outputfile_path
@@ -105,6 +108,7 @@ fn test_save_classifier() ? {
 	tcl = load_classifier_file(opts.classifierfile_path)?
 	assert tcl.trained_attributes == cl.trained_attributes
 	assert tcl.instances == cl.instances
+	assert tcl.maximum_hamming_distance == 32
 
 	ds = load_file('datasets/soybean-large-train.tab')
 	cl = make_classifier(mut ds, opts)
@@ -112,6 +116,7 @@ fn test_save_classifier() ? {
 	tcl = load_classifier_file(opts.classifierfile_path)?
 	assert tcl.trained_attributes == cl.trained_attributes
 	assert tcl.instances == cl.instances
+	assert tcl.maximum_hamming_distance == 27
 
 	if get_environment().arch_details[0] != '4 cpus' {
 		path := 'datasets/mnist_test.tab'
@@ -121,5 +126,6 @@ fn test_save_classifier() ? {
 		tcl = load_classifier_file(opts.classifierfile_path)?
 		assert tcl.trained_attributes == cl.trained_attributes
 		assert tcl.instances == cl.instances
+		assert tcl.maximum_hamming_distance == 72
 	}
 }

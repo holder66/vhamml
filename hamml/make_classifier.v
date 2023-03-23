@@ -135,6 +135,16 @@ pub fn make_classifier(mut ds Dataset, opts Options) Classifier {
 		}
 		attr_binned_values << binned_values.map(u8(it))
 	}
+	// calculate the maximum possible hamming distance for this classifier
+	for _, attr in cl.trained_attributes {
+		// println(attr)
+		if attr.attribute_type == 'C' {
+			cl.maximum_hamming_distance += attr.bins
+		} else {
+			cl.maximum_hamming_distance += attr.translation_table.len
+		}
+	}
+	// println('maximum_hamming_distance: ${cl.maximum_hamming_distance}')
 	cl.instances = transpose(attr_binned_values)
 	cl.attribute_ordering = attr_names
 	prepurge_instances_count := cl.instances.len
