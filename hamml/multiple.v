@@ -9,7 +9,7 @@ import arrays
 // each classifier, and corresponding to the settings for that classifier.
 
 // multiple_classifier_classify
-fn multiple_classifier_classify(index int, classifiers []Classifier, instances_to_be_classified [][]u8, opts Options) ClassifyResult {
+fn multiple_classifier_classify(index int, classifiers []Classifier, instances_to_be_classified [][]u8, labeled_classes []string, opts Options) ClassifyResult {
 	mut final_cr := ClassifyResult{
 		index: index
 		multiple_flag: true
@@ -204,9 +204,9 @@ fn multiple_classifier_classify(index int, classifiers []Classifier, instances_t
 	if inferred_classes_by_classifier.len > 1
 		&& uniques(inferred_classes_by_classifier.filter(it != '')).len > 1 {
 		final_cr.inferred_class = resolve_conflict(mcr)
-		show_detailed_result(index, final_cr.inferred_class, mcr)
+		show_detailed_result(index, final_cr.inferred_class, labeled_classes, mcr)
 
-		println('instance: ${index} ${inferred_classes_by_classifier} nearest neighbors: ${mcr.results_by_classifier.map(it.results_by_radius.map(it.nearest_neighbors_by_class))}} inferred_class: ${final_cr.inferred_class}')
+		// println('instance: ${index} ${inferred_classes_by_classifier} nearest neighbors: ${mcr.results_by_classifier.map(it.results_by_radius.map(it.nearest_neighbors_by_class))}} inferred_class: ${final_cr.inferred_class}')
 
 		// println(mcr)
 	} else {
@@ -217,7 +217,7 @@ fn multiple_classifier_classify(index int, classifiers []Classifier, instances_t
 	// final_cr.inferred_class_array = inferred_class_array
 	// final_cr.nearest_neighbors_array = nearest_neighbors_array
 	if opts.verbose_flag {
-		show_detailed_result(index, final_cr.inferred_class, mcr)
+		show_detailed_result(index, final_cr.inferred_class, labeled_classes, mcr)
 	}
 	return final_cr
 }
@@ -226,20 +226,20 @@ fn multiple_classifier_classify(index int, classifiers []Classifier, instances_t
 fn resolve_conflict(mcr MultipleClassifierResults) string {
 	// println(mcr)
 	// at the smallest sphere radius, can we get a majority vote?
-	// mut sphere_index := 0
-	// for {
-	// 	mut infs := arrays.flatten(mcr.results_by_classifier.map(it.results_by_radius.filter(it.sphere_index == sphere_index && it.inferred_class_found).map(it.inferred_class)))
-	// 	// println(infs)
-	// 	// println(element_counts(infs))
-	// 	if element_counts(infs).len > 0 {
-	// 		println(get_map_key_for_max_value(element_counts(infs)))
-	// 		return get_map_key_for_max_value(element_counts(infs))
-	// 	}
-	// }
-	// 	// println(mcr.results_by_classifier.map(it.results_by_radius.map(it.inferred_class_found.)))
-	// 	sphere_index ++
-	// 	if sphere_index >= mcr.max_sphere_index {break}
-	// }
+	mut sphere_index := 0
+	for {
+		mut infs := arrays.flatten(mcr.results_by_classifier.map(it.results_by_radius.filter(it.sphere_index == sphere_index && it.inferred_class_found).map(it.inferred_class)))
+		// println(infs)
+		// println(element_counts(infs))
+		if element_counts(infs).len > 0 {
+			println(get_map_key_for_max_value(element_counts(infs)))
+			return get_map_key_for_max_value(element_counts(infs))
+		}
+	
+		// println(mcr.results_by_classifier.map(it.results_by_radius.map(it.inferred_class_found.)))
+		sphere_index ++
+		if sphere_index >= mcr.max_sphere_index {break}
+	}
 
 	// pick the result with the greatest number of nearest neighbors
 	// sums := mcr.results_by_classifier.map(it.results_by_radius.last()).map(it.nearest_neighbors_by_class).map(array_sum(it))

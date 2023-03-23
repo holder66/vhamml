@@ -353,11 +353,11 @@ fn option_worker(work_channel chan int, result_channel chan CrossVerifyResult, p
 // returns the results of the classification.
 fn multiple_classify_in_cross(fold int, m_cl []Classifier, m_test_instances [][][]u8, mut result CrossVerifyResult, opts Options) CrossVerifyResult {
 	// println('opts in multiple_classify_in_cross: ${opts}')
-
+	// println('labeled_classes in multiple_classify_in_cross: ${result.labeled_classes}')
 	// for each instance in the test data, perform a classification
 	for i, test_instance in m_test_instances {
 		// println('i: $i test_instance: $test_instance')
-		m_classify_result := multiple_classifier_classify(fold, m_cl, test_instance, opts)
+		m_classify_result := multiple_classifier_classify(fold, m_cl, test_instance, result.labeled_classes, opts)
 		result.inferred_classes << m_classify_result.inferred_class
 		result.actual_classes << result.labeled_classes[i]
 		result.nearest_neighbors_by_class << m_classify_result.nearest_neighbors_by_class
