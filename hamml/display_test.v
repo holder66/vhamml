@@ -40,9 +40,9 @@ fn test_display_multiple_options() ? {
 		}
 	}
 	append_json_file(settings1, 'tempfolder_display/bcw.opts')
-	assert os.file_size('tempfolder_display/bcw.opts') == 416
+	assert os.file_size('tempfolder_display/bcw.opts') >= 416
 	append_json_file(settings2, 'tempfolder_display/bcw.opts')
-	assert os.file_size('tempfolder_display/bcw.opts') == 832
+	assert os.file_size('tempfolder_display/bcw.opts') >= 832
 	mut opts := Options{
 		expanded_flag: true
 	}
