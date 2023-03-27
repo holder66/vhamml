@@ -168,3 +168,22 @@ fn test_lcm() {
 	arr = [5421, 5923, 6742, 5949, 5958, 6131, 5918]
 	assert lcm(arr) == 0
 }
+
+// test_plurality_vote 
+fn test_plurality_vote() ? {
+	assert plurality_vote(['a','a','b']) == 'a'
+	assert plurality_vote([]) == ''
+	assert plurality_vote(['a']) == 'a'
+	assert plurality_vote(['a','a','b','b']) == ''
+	assert plurality_vote(['a','a','b','c']) == 'a'
+	
+}
+
+// test_majority_vote 
+fn test_majority_vote() ? {
+	assert majority_vote(['a','a','b']) == 'a'
+	assert majority_vote([]) == ''
+	assert majority_vote(['a']) == 'a'
+	assert majority_vote(['a','a','b','b']) == ''
+	assert majority_vote(['a','a','b','c']) == ''
+}

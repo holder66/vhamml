@@ -313,7 +313,6 @@ fn do_one_fold(pick_list []int, current_fold int, folds int, ds Dataset, cross_o
 			mult_opts.Parameters = params
 			fold_result.Parameters = params
 			part_cl := make_classifier(mut part_ds, mult_opts)
-			println(part_cl)
 			classifier_array << part_cl
 			byte_values_array = [][]u8{}
 			for attr in part_cl.attribute_ordering {

@@ -397,3 +397,40 @@ fn get_binning(bins []int) Binning {
 		interval: bins[2]
 	}
 }
+
+fn get_map_key_for_max_value(m map[string]int) string {
+	max := array_max(m.values())
+	for key, val in m {
+		if val == max {
+			return key
+		}
+	}
+	return ''
+}
+
+// plurality_vote returns the string whose count is greater
+// than the count of any other string in arr
+fn plurality_vote(arr []string) string {
+	if arr == [] { return '' }
+	// get the counts
+	counts := element_counts(arr).values()
+	max := array_max(counts)
+	// there should only be one maximum value
+	if counts.filter(it == max).len == 1 {
+		return get_map_key_for_max_value(element_counts(arr))
+	}
+	return ''
+}
+
+
+// majority_vote returns the string whose count is more than half
+// the total of counts in arr
+fn majority_vote(arr []string) string {
+	if arr == [] { return '' }
+	max := array_max(element_counts(arr).values())
+	if max * 2 > array_sum(element_counts(arr).values()) {
+		return get_map_key_for_max_value(element_counts(arr))
+	}	
+	return ''
+}
+

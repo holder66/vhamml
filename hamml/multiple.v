@@ -228,21 +228,37 @@ fn multiple_classifier_classify(index int, classifiers []Classifier, instances_t
 fn resolve_conflict(mcr MultipleClassifierResults) string {
 	// println(mcr)
 	// at the smallest sphere radius, can we get a majority vote?
+	// note that there should only be one maximum value
 	mut sphere_index := 0
 	for {
 		mut infs := arrays.flatten(mcr.results_by_classifier.map(it.results_by_radius.filter(it.sphere_index == sphere_index && it.inferred_class_found).map(it.inferred_class)))
-		// println(infs)
+		println(infs)
 		// println(element_counts(infs))
-		if element_counts(infs).len > 0 {
-			println(get_map_key_for_max_value(element_counts(infs)))
-			return get_map_key_for_max_value(element_counts(infs))
+		// if element_counts(infs).len > 0 {
+		// 	// get maximum value of element_counts
+		// 	// max := array_max(infs)
+		// 	// println(infs.filter(it == array_max(element_counts(infs).values())))
+		// 	println('Majority vote')
+		// 	println(get_map_key_for_max_value(element_counts(infs)))
+		// 	return get_map_key_for_max_value(element_counts(infs))
+		// }
+
+		// test for a plurality vote
+		if plurality_vote(infs) != '' {
+			println('Plurality_vote')
+			return plurality_vote(infs)
 		}
 	
+		// test for a majority vote
+		if majority_vote(infs) != '' {
+			println('Majority vote')
+			return majority_vote(infs)
+		}
 		// println(mcr.results_by_classifier.map(it.results_by_radius.map(it.inferred_class_found.)))
 		sphere_index ++
 		if sphere_index >= mcr.max_sphere_index {break}
 	}
-
+	println('Majority vote fell through')
 	// pick the result with the greatest number of nearest neighbors
 	// sums := mcr.results_by_classifier.map(it.results_by_radius.last()).map(it.nearest_neighbors_by_class).map(array_sum(it))
 	// return mcr.results_by_classifier[idx_max(sums)].inferred_class
@@ -334,14 +350,4 @@ fn resolve_conflict(mcr MultipleClassifierResults) string {
 	// 	// final_cr.inferred_class = cl.classes[idx_max(mcr.nearest_neighbors_array[idx_max(ratios_array)])]
 	// }
 	// }
-}
-
-fn get_map_key_for_max_value(m map[string]int) string {
-	max := array_max(m.values())
-	for key, val in m {
-		if val == max {
-			return key
-		}
-	}
-	return ''
 }

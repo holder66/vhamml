@@ -193,7 +193,7 @@ fn show_verify(result CrossVerifyResult, opts Options) {
 fn show_multiple_classifiers_options(m_o MultipleOptions, m_c_a MultipleClassifiersArray) {
 	mut row_labels := ['Classifier:', 'Number of attributes:', 'Binning:', 'Ranking using weighting:', 'Weighting:',
 		'Balance prevalences:', 'Purging:', 'True counts:',
-		'False counts:', 'Raw accuracy:', 'Balanced accuracy:', 'Maximum Hamming Dist:']
+		'False counts:', 'Raw accuracy:', 'Balanced accuracy:', 'Maximum Hamming Distance:']
 	println('break_on_all_flag: ${m_o.break_on_all_flag}     combined_radii_flag: ${m_o.combined_radii_flag}')
 	println('Multiple Classifier Parameters:')
 	mut row_data := []string{len: row_labels.len, init: ''}

@@ -18,6 +18,11 @@ fn testsuite_end() ? {
 	os.rmdir_all('tempfolder4')!
 }
 
+// test_majority_vote 
+fn test_majority_vote() ? {
+	println(majority_vote(['a','a','b']))
+	
+}
 // test_multiple_verify
 fn test_multiple_verify() ? {
 	mut opts := Options{
