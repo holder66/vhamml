@@ -68,6 +68,9 @@ const (
                      matches have been found for all classifiers;
     -mc:             when multiple classifiers are used, combine the possible 
                      hamming distances for each classifier into a single list;
+    -mt:             when multiple classifiers are used, add the nearest
+                     neighbors from each classifier, weight by class
+                     prevalences, and then infer from the totals;
     -m#:             followed by a list of which classifiers to apply in a 
                      multiple classification run (zero-indexed);
     -ms:             append the settings to a file (path follows flag) for use 

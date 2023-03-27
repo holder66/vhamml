@@ -26,6 +26,7 @@ fn multiple_classifier_classify(index int, classifiers []Classifier, instances_t
 
 	// println(opts)
 	// println(mcr.MultipleOptions)
+
 	// to classify, get Hamming distances between the entered instance and
 	// all the instances in all the classifiers; return the class for the
 	// instance giving the lowest Hamming distance.
@@ -47,8 +48,11 @@ fn multiple_classifier_classify(index int, classifiers []Classifier, instances_t
 		mut hamming_distances := []int{}
 		for instance in cl.instances {
 			mut hamming_dist := 0
+			// for j, byte_value in instances_to_be_classified[i] {
+			// 	hamming_dist += int(get_hamming_distance(byte_value, instance[j]) * mcr.lcm_attributes / mcr.number_of_attributes[i])
+			// }
 			for j, byte_value in instances_to_be_classified[i] {
-				hamming_dist += int(get_hamming_distance(byte_value, instance[j]) * mcr.lcm_attributes / mcr.number_of_attributes[i])
+				hamming_dist += get_hamming_distance(byte_value, instance[j])
 			}
 			hamming_distances << hamming_dist
 		}
@@ -64,8 +68,8 @@ fn multiple_classifier_classify(index int, classifiers []Classifier, instances_t
 		// multiply each value by the maximum number of attributes, and
 		// divide by this classifier's number of attributes
 		// println(hamming_distances.map(it * maximum_number_of_attributes / cl.attribute_ordering.len))
-		hamming_dist_arrays << hamming_distances.map(it * mcr.maximum_number_of_attributes / cl.attribute_ordering.len)
-		// hamming_dist_arrays << hamming_distances
+		// hamming_dist_arrays << hamming_distances.map(it * mcr.maximum_number_of_attributes / cl.attribute_ordering.len)
+		hamming_dist_arrays << hamming_distances
 	}
 	// println('hamming_dist_arrays: $hamming_dist_arrays')
 	// mut nearest_neighbors_array := [][]int{cap: hamming_dist_arrays.len}

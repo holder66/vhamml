@@ -47,6 +47,9 @@ import math
 //    have been found for all classifiers;
 // -mc when multiple classifiers are used, combine the possible hamming
 //    distances for each classifier into a single list;
+// -mt when multiple classifiers are used, add the nearest neighbors from
+//    each classifier, weight by class prevalences, and then infer
+//    from the totals;
 // -m# followed by a list of which classifiers to apply in a multiple classi-
 //	  fication run (zero-indexed); also used to specify which classifiers to
 //    append to a settings file;
@@ -129,6 +132,7 @@ fn get_options(args []string) hamml.Options {
 	opts.multiple_flag = flag(args, ['-m', '--multiple'])
 	opts.break_on_all_flag = flag(args, ['-ma'])
 	opts.combined_radii_flag = flag(args, ['-mc'])
+	opts.total_nn_counts_flag = flag(args, ['-mt'])
 	opts.append_settings_flag = flag(args, ['-ms'])
 	opts.purge_flag = flag(args, ['-p', '--purge'])
 	opts.balance_prevalences_flag = flag(args, ['-bp', '--balanced-prevalences'])

@@ -178,6 +178,7 @@ pub struct MultipleOptions {
 pub mut:
 	break_on_all_flag   bool
 	combined_radii_flag bool
+	total_nn_counts_flag bool
 	classifier_indices  []int
 }
 
