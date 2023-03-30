@@ -10,6 +10,9 @@ import arrays
 
 // multiple_classifier_classify
 fn multiple_classifier_classify(index int, classifiers []Classifier, instances_to_be_classified [][]u8, labeled_classes []string, opts Options) ClassifyResult {
+	if opts.total_nn_counts_flag {
+		return multiple_classifier_classify_totalnn(index, classifiers, instances_to_be_classified, labeled_classes, opts)
+	}
 	mut final_cr := ClassifyResult{
 		index: index
 		multiple_flag: true

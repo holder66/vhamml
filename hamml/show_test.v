@@ -260,9 +260,12 @@ fn test_show_multiple_classifiers_options() ? {
 	println('\n\ntest_show_multiple_classifiers_options prints out a table showing the classifier settings for the chosen classifiers in a multiple classifier cross-validation or verification')
 	mut opts := Options{
 		verbose_flag: false
-		show_flag: true
+		show_flag: false
 		datafile_path: 'datasets/UCI/leukemia38train'
 		testfile_path: 'datasets/UCI/leukemia34test'
 		settingsfile_path: 'tempfolder_show/leuk.opts'
 	}
+	mut result := CrossVerifyResult{}
+	mut ds := Dataset{}
+	mut cl := Classifier{}
 }
