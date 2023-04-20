@@ -28,7 +28,7 @@ sudo ./v symlink	# add v to your PATH
 Clone this github repository:
 ```sh
 cd ~               # go back to your home directory
-git clone https://github.com/holder66/VHamML
+git clone https://github.com/holder66/vhamml
 ```
 Install the needed dependencies:
 ```sh
@@ -62,9 +62,7 @@ v .         # recompile
 ## Getting help:
 The V lang community meets on [Discord](https://discord.gg/vlang)
 
-For bug reports, feature requests, etc., please raise an issue on github:
-
-[for VHamML](https://github.com/holder66/vhamml)
+For bug reports, feature requests, etc., please raise an issue on [github](https://github.com/holder66/vhamml)
 
 
 ## Speed things up:
@@ -99,9 +97,6 @@ The mnist_train.tab file is too large to keep in the repository. If you wish to 
 ```
 wget http://henry.olders.ca/datasets/mnist_train.tab
 ```
-
-## Previous versions
-The most recent version (2012) was written in python; one can experiment with it via a [web-based interface](http://hammingnn.olders.ca). I’ve [posted test results](https://henry.olders.ca/wordpress/?p=613) using this classifier with a number of publicly accessible datasets. Here are some [additional test results](https://henry.olders.ca/wordpress/?p=381) with genomics datasets.
 
 The process of development in its early stages is described in [this essay](https://henry.olders.ca/wordpress/?p=731) written in 1989.
 
