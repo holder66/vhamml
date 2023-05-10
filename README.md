@@ -62,9 +62,7 @@ v .         # recompile
 ## Getting help:
 The V lang community meets on [Discord](https://discord.gg/vlang)
 
-For bug reports, feature requests, etc., please raise an issue on github:
-
-[for VHamML](https://github.com/holder66/vhamml)
+For bug reports, feature requests, etc., please raise an issue on [github](https://github.com/holder66/vhamml/issues)
 
 
 ## Speed things up:
