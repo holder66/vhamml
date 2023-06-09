@@ -241,6 +241,10 @@ fn load_orange_newer_file(path string) Dataset {
 	ds.Class = set_class_struct(ds)
 	ds.useful_continuous_attributes = get_useful_continuous_attributes(ds)
 	ds.useful_discrete_attributes = get_useful_discrete_attributes(ds)
+	if ds.attribute_types[0] == 'm' {
+		ds.row_identifiers = ds.data[0]
+	}
+	// println(ds)
 	return ds
 }
 

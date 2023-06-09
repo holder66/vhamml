@@ -37,6 +37,7 @@ pub mut:
 	data                         [][]string
 	useful_continuous_attributes map[int][]f32
 	useful_discrete_attributes   map[int][]string
+	row_identifiers		[]string
 }
 
 struct Fold {
@@ -161,6 +162,7 @@ pub mut:
 	append_settings_flag                bool
 	command                             string
 	args                                []string
+	kagglefile_path		string
 }
 
 pub struct MultipleClassifiersArray {
@@ -357,6 +359,7 @@ pub mut:
 	struct_type                     string = '.ValidateResult'
 	datafile_path                   string
 	validate_file_path              string
+	row_identifiers		[]string
 	inferred_classes                []string
 	counts                          [][]int
 	instances                       [][]u8

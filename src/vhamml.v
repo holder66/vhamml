@@ -41,6 +41,8 @@ import math
 // -g --graph, displays a plot;
 // -h --help,
 // -k --classifier, followed by the path to a file for a saved Classifier
+// -ka --kaggle, followed by the path to a file for submission to a Kaggle
+//    competition;
 // -m --multiple, classify using more than one trained classifier, followed by
 //    the path to a json file with parameters to generate each classifier;
 // -ma when multiple classifiers are used, stop classifying when matches
@@ -150,6 +152,8 @@ fn get_options(args []string) hamml.Options {
 	opts.classifierfile_path = option(args, ['-k', '--classifier'])
 	opts.multiple_classify_options_file_path = option(args, ['-m', '--multiple'])
 	opts.settingsfile_path = option(args, ['-ms'])
+	opts.kagglefile_path = option(args, ['-ka', '--kaggle'])
+	println(opts)
 	return opts
 }
 

@@ -46,7 +46,8 @@ pub fn classify_instance(index int, cl Classifier, instance_to_be_classified []u
 					radius_row[class_index] += (if !opts.weighting_flag {
 						1
 					} else {
-						int(i64(lcm(get_map_values(cl.class_counts))) / cl.class_counts[cl.classes[class_index]])
+						// int(i64(lcm(get_map_values(cl.class_counts))) / cl.class_counts[cl.classes[class_index]])
+						int(cl.lcm_class_counts / cl.class_counts[cl.classes[class_index]])
 					})
 				}
 			}

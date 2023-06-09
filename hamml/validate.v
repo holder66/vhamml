@@ -4,6 +4,8 @@ Given a classifier and a validation dataset, classifies each instance
   of the validation_set on the trained classifier; returns the predicted classes for each instance of the validation_set.*/
 module hamml
 
+import os
+
 // validate classifies each instance of a validation datafile against
 // a trained Classifier; returns the predicted classes for each instance
 // of the validation_set.
@@ -57,6 +59,20 @@ pub fn validate(cl Classifier, opts Options) ?ValidateResult {
 	if opts.outputfile_path != '' {
 		validate_result.instances = test_instances
 		save_json_file(validate_result, opts.outputfile_path)
+	}
+	// println(validate_result)
+	println('opts.kagglefile_path: $opts.kagglefile_path')
+	if opts.kagglefile_path != '' {
+		mut f := os.create(opts.kagglefile_path) or {
+    		panic('file not writeable')
+    	}
+    	f.writeln(test_ds.attribute_names[0] + ',' + validate_result.class_name) or {panic('write class name problem')}
+    	for i, result in validate_result.inferred_classes {
+    		// println(test_ds.row_identifiers[i] + ',' + result)
+    		f.writeln(test_ds.row_identifiers[i] + ',' + result) or {panic('write problem')}
+    	}
+		f.close()
+		// os.write_file(opts.kagglefile_path, "This is the start ") or {println("file problem")}
 	}
 	return validate_result
 }
