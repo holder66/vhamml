@@ -1,7 +1,15 @@
 // validate.v
 /*
 Given a classifier and a validation dataset, classifies each instance
-  of the validation_set on the trained classifier; returns the predicted classes for each instance of the validation_set.*/
+of the validation_set on the trained classifier; returns the predicted classes 
+for each instance of the validation_set.
+If a Kaggle file path is provided, a CSV file will be created with two columns.
+The first column is a row identifier, and is taken from the first column of
+the file to be validated if that attribute is identified as metadata (ie, m#...)
+Thus, for Kaggle, adjust their test file by adding (if necessary) a row
+identifier attribute, and make sure that there is a class attribute whose
+values are empty.
+*/
 module hamml
 
 import os
@@ -12,7 +20,7 @@ import os
 // The file to be validated is specified by `opts.testfile_path`.
 // Optionally, saves the instances and their predicted classes in a file.
 // This file can be used to append these instances to the classifier.
-pub fn validate(cl Classifier, opts Options) ?ValidateResult {
+pub fn validate(cl Classifier, opts Options) !ValidateResult {
 	// load the testfile as a Dataset struct
 	// println(opts)
 	mut test_ds := load_file(opts.testfile_path)
@@ -61,8 +69,12 @@ pub fn validate(cl Classifier, opts Options) ?ValidateResult {
 		save_json_file(validate_result, opts.outputfile_path)
 	}
 	// println(validate_result)
-	println('opts.kagglefile_path: $opts.kagglefile_path')
+	// println('opts.kagglefile_path: $opts.kagglefile_path')
 	if opts.kagglefile_path != '' {
+		// test if there is a metadata attribute as the first attribute (as row identifier)
+		if test_ds.attribute_types[0] != 'm' { 
+			println('Validate failed: the file to be verified, "${opts.testfile_path}", does not have a metadata attribute in the first column, for use as a row identifier.')
+			exit(1)}
 		mut f := os.create(opts.kagglefile_path) or {
     		panic('file not writeable')
     	}
@@ -72,7 +84,6 @@ pub fn validate(cl Classifier, opts Options) ?ValidateResult {
     		f.writeln(test_ds.row_identifiers[i] + ',' + result) or {panic('write problem')}
     	}
 		f.close()
-		// os.write_file(opts.kagglefile_path, "This is the start ") or {println("file problem")}
 	}
 	return validate_result
 }

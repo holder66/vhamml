@@ -83,16 +83,16 @@ fn main() {
 		command := opts.command
 		match command {
 			'analyze' { analyze(mut opts) }
-			'append' { do_append(mut opts)? }
+			'append' { do_append(mut opts)! }
 			'cross' { cross(mut opts) }
 			'display' { do_display(opts) }
 			// 'examples' { examples()! }
 			'explore' { do_explore(mut opts) }
 			'make' { make(mut opts)? }
 			'orange' { orange() }
-			'query' { do_query(mut opts)? }
+			'query' { do_query(mut opts)! }
 			'rank' { rank(mut opts) }
-			'validate' { do_validate(mut opts)? }
+			'validate' { do_validate(mut opts)! }
 			'verify' { do_verify(mut opts)? }
 			else { println('unrecognized command') }
 		}
@@ -153,7 +153,6 @@ fn get_options(args []string) hamml.Options {
 	opts.multiple_classify_options_file_path = option(args, ['-m', '--multiple'])
 	opts.settingsfile_path = option(args, ['-ms'])
 	opts.kagglefile_path = option(args, ['-ka', '--kaggle'])
-	println(opts)
 	return opts
 }
 
@@ -210,10 +209,10 @@ fn analyze(mut opts hamml.Options) {
 // do_append appends instances in a file, to a classifier in a file specified
 // by flag -k, and (optionally) stores the extended classifier in a file
 // specified by -o. It displays the extended classifier on the console.
-fn do_append(mut opts hamml.Options) ? {
+fn do_append(mut opts hamml.Options) ! {
 	opts.show_flag = true
-	ext_cl := hamml.append_instances(hamml.load_classifier_file(opts.classifierfile_path)?,
-		hamml.load_instances_file(opts.datafile_path)?, opts)
+	ext_cl := hamml.append_instances(hamml.load_classifier_file(opts.classifierfile_path)!,
+		hamml.load_instances_file(opts.datafile_path)!, opts)
 	if opts.expanded_flag {
 		println(ext_cl)
 	}
@@ -227,13 +226,13 @@ fn do_display(opts hamml.Options) {
 }
 
 // query
-fn do_query(mut opts hamml.Options) ? {
+fn do_query(mut opts hamml.Options) ! {
 	mut cl := hamml.Classifier{}
 	if opts.classifierfile_path == '' {
 		mut ds := hamml.load_file(opts.datafile_path)
 		cl = hamml.make_classifier(mut ds, opts)
 	} else {
-		cl = hamml.load_classifier_file(opts.classifierfile_path)?
+		cl = hamml.load_classifier_file(opts.classifierfile_path)!
 	}
 	qr := hamml.query(cl, opts)
 	if opts.expanded_flag {
@@ -248,16 +247,16 @@ fn do_verify(mut opts hamml.Options) ? {
 }
 
 // validate
-fn do_validate(mut opts hamml.Options) ? {
+fn do_validate(mut opts hamml.Options) ! {
 	mut cl := hamml.Classifier{}
 	if opts.classifierfile_path == '' {
 		mut ds := hamml.load_file(opts.datafile_path)
 		cl = hamml.make_classifier(mut ds, opts)
 	} else {
-		cl = hamml.load_classifier_file(opts.classifierfile_path)?
+		cl = hamml.load_classifier_file(opts.classifierfile_path)!
 	}
 	opts.show_flag = true
-	var := hamml.validate(cl, opts)?
+	var := hamml.validate(cl, opts)!
 	if opts.expanded_flag {
 		println(var)
 	}

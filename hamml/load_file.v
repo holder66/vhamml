@@ -44,7 +44,7 @@ pub fn file_type(path string) string {
 //
 // Example:
 // `cl := load_classifier_file('tempfolder/saved_classifier.txt')`
-pub fn load_classifier_file(path string) ?Classifier {
+pub fn load_classifier_file(path string) !Classifier {
 	s := os.read_file(path.trim_space()) or { panic('failed to open ${path}') }
 	cl := json.decode(Classifier, s) or { panic('Failed to parse json') }
 	return cl
@@ -56,7 +56,7 @@ pub fn load_classifier_file(path string) ?Classifier {
 //
 // Example:
 // `instances := load_instances_file('tempfolder/saved_validate_result.txt')`
-pub fn load_instances_file(path string) ?ValidateResult {
+pub fn load_instances_file(path string) !ValidateResult {
 	// mut instances := ValidateResult{}
 	// mut s := ''
 	s := os.read_file(path.trim_space()) or { panic('failed to open ${path}') }
