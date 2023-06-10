@@ -73,7 +73,16 @@ fn test_multiple_verify() ? {
 	result = verify(opts)
 	// with both classifiers
 	show_expanded_result(result)
-	assert result.confusion_matrix_map == {'ALL': {'ALL': 20.0, 'AML': 0.0}, 'AML': {'ALL': 7.0, 'AML': 7.0}}
+	assert result.confusion_matrix_map == {
+		'ALL': {
+			'ALL': 20.0
+			'AML': 0.0
+		}
+		'AML': {
+			'ALL': 7.0
+			'AML': 7.0
+		}
+	}
 
 	opts.classifier_indices = [0]
 	result = verify(opts)

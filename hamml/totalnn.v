@@ -7,7 +7,7 @@ module hamml
 // this version of multiple.v is to add up the nearest neighbors for the
 // multiple classifiers prior to making the inference
 
-// multiple_classifier_classify_totalnn 
+// multiple_classifier_classify_totalnn
 fn multiple_classifier_classify_totalnn(index int, classifiers []Classifier, instances_to_be_classified [][]u8, labeled_classes []string, opts Options) ClassifyResult {
 	mut final_cr := ClassifyResult{
 		index: index
@@ -20,9 +20,9 @@ fn multiple_classifier_classify_totalnn(index int, classifiers []Classifier, ins
 		maximum_hamming_distance_array << max_ham_dist(cl)
 	}
 	total_max_ham_dist := array_sum(maximum_hamming_distance_array)
-	println('total_max_ham_dist: $total_max_ham_dist')
+	println('total_max_ham_dist: ${total_max_ham_dist}')
 	lcm_max_ham_dist := lcm(maximum_hamming_distance_array)
-	println('lcm_max_ham_dist: $lcm_max_ham_dist')
+	println('lcm_max_ham_dist: ${lcm_max_ham_dist}')
 	// // println(opts.MultipleOptions)
 	mut total_nns_by_class := []f64{len: 2}
 	mut weighted_totals := []f64{len: 2}
@@ -34,7 +34,7 @@ fn multiple_classifier_classify_totalnn(index int, classifiers []Classifier, ins
 	// 	// 	MultipleOptions: opts.MultipleOptions
 	// 	// 	results_by_classifier: []IndividualClassifierResults{len: classifiers.len}
 	// 	// }
-		
+
 	for i, cl in classifiers {
 		// println('weighting_flag: $cl.weighting_flag')
 
@@ -50,12 +50,12 @@ fn multiple_classifier_classify_totalnn(index int, classifiers []Classifier, ins
 		mut nearest_neighbors_by_class := []f64{len: cl.class_counts.len}
 		for class_index, class in cl.classes {
 			for instance, distance in hamming_distances {
-				if distance <= radius  && class == cl.class_values[instance] {
+				if distance <= radius && class == cl.class_values[instance] {
 					nearest_neighbors_by_class[class_index] += 1
-				}						
+				}
 			}
 		}
-		
+
 		// total nearest neigbors by class for all classifiers
 		print('nearest_neighbors_by_class: ')
 		println(nearest_neighbors_by_class)
@@ -66,7 +66,7 @@ fn multiple_classifier_classify_totalnn(index int, classifiers []Classifier, ins
 			nearest_neighbors_by_class_array << nearest_neighbors_by_class.map(it * lcm_max_ham_dist / (total_max_ham_dist - maximum_hamming_distance_array[i]))
 		} else {
 			nearest_neighbors_by_class_array << nearest_neighbors_by_class
-		}	
+		}
 	}
 	print('nearest_neighbors_by_class_array: ')
 	println(nearest_neighbors_by_class_array)
@@ -75,24 +75,22 @@ fn multiple_classifier_classify_totalnn(index int, classifiers []Classifier, ins
 		for j, count in nn {
 			total_nns_by_class[j] += count
 		}
-	}	
+	}
 	// println('total_nns_by_class: ${total_nns_by_class}')
 	// weight by class prevalences
-	println('lcm: $lcm_val') 
+	println('lcm: ${lcm_val}')
 	for j, nn in total_nns_by_class {
 		weighted_totals[j] = f64(nn) * lcm_val / classifiers[0].class_counts[classifiers[0].class_values[j]]
 	}
 	// for cl in classifiers { println(cl.class_counts)}
 	println('weighted_totals: ${weighted_totals}')
-	
+
 	if single_array_maximum(weighted_totals) {
 		final_cr.inferred_class = classifiers[0].classes[idx_max(weighted_totals)]
 		return final_cr
 	}
 	return final_cr
 }
-
-
 
 // max_ham_dist returns the maximum possible hamming distance for a classifier
 fn max_ham_dist(cl Classifier) int {

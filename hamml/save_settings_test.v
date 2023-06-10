@@ -11,9 +11,9 @@ fn testsuite_begin() ? {
 	os.mkdir_all('tempfolder5')!
 }
 
-// fn testsuite_end() ? {
-// 	os.rmdir_all('tempfolder5')!
-// }
+fn testsuite_end() ? {
+	os.rmdir_all('tempfolder5')!
+}
 
 // test_append
 fn test_append() ? {

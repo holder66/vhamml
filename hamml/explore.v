@@ -34,9 +34,6 @@ pub fn explore(ds Dataset, opts Options) ExploreResult {
 		DisplaySettings: opts.DisplaySettings
 		AttributeRange: get_attribute_range(opts.number_of_attributes,
 			ds.useful_continuous_attributes.len + ds.useful_discrete_attributes.len)
-		folds: opts.folds
-		repetitions: opts.repetitions
-		random_pick: opts.random_pick
 		pos_neg_classes: get_pos_neg_classes(ds.class_counts)
 		args: opts.args
 	}

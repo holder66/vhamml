@@ -22,7 +22,8 @@ fn test_help() {
 }
 
 fn test_command_help() {
-	commands := ['analyze', 'append', 'cross', 'display', 'examples', 'explore', 'make', 'orange', 'query', 'rank', 'validate', 'verify']
+	commands := ['analyze', 'append', 'cross', 'display', 'examples', 'explore', 'make', 'orange',
+		'query', 'rank', 'validate', 'verify']
 	flags := ['', '--help', '-h']
 	for command in commands {
 		for flag in flags {

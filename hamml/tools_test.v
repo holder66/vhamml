@@ -171,21 +171,20 @@ fn test_lcm() {
 	assert lcm(arr) == 0
 }
 
-// test_plurality_vote 
+// test_plurality_vote
 fn test_plurality_vote() ? {
-	assert plurality_vote(['a','a','b']) == 'a'
+	assert plurality_vote(['a', 'a', 'b']) == 'a'
 	assert plurality_vote([]) == ''
 	assert plurality_vote(['a']) == 'a'
-	assert plurality_vote(['a','a','b','b']) == ''
-	assert plurality_vote(['a','a','b','c']) == 'a'
-	
+	assert plurality_vote(['a', 'a', 'b', 'b']) == ''
+	assert plurality_vote(['a', 'a', 'b', 'c']) == 'a'
 }
 
-// test_majority_vote 
+// test_majority_vote
 fn test_majority_vote() ? {
-	assert majority_vote(['a','a','b']) == 'a'
+	assert majority_vote(['a', 'a', 'b']) == 'a'
 	assert majority_vote([]) == ''
 	assert majority_vote(['a']) == 'a'
-	assert majority_vote(['a','a','b','b']) == ''
-	assert majority_vote(['a','a','b','c']) == ''
+	assert majority_vote(['a', 'a', 'b', 'b']) == ''
+	assert majority_vote(['a', 'a', 'b', 'c']) == ''
 }

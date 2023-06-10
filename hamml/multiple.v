@@ -11,7 +11,8 @@ import arrays
 // multiple_classifier_classify
 fn multiple_classifier_classify(index int, classifiers []Classifier, instances_to_be_classified [][]u8, labeled_classes []string, opts Options) ClassifyResult {
 	if opts.total_nn_counts_flag {
-		return multiple_classifier_classify_totalnn(index, classifiers, instances_to_be_classified, labeled_classes, opts)
+		return multiple_classifier_classify_totalnn(index, classifiers, instances_to_be_classified,
+			labeled_classes, opts)
 	}
 	mut final_cr := ClassifyResult{
 		index: index
@@ -239,7 +240,8 @@ fn resolve_conflict(mcr MultipleClassifierResults) string {
 	// note that there should only be one maximum value
 	mut sphere_index := 0
 	for {
-		mut infs := arrays.flatten(mcr.results_by_classifier.map(it.results_by_radius.filter(it.sphere_index == sphere_index && it.inferred_class_found).map(it.inferred_class)))
+		mut infs := arrays.flatten(mcr.results_by_classifier.map(it.results_by_radius.filter(
+			it.sphere_index == sphere_index && it.inferred_class_found).map(it.inferred_class)))
 		println(infs)
 		// println(element_counts(infs))
 		// if element_counts(infs).len > 0 {
@@ -256,15 +258,17 @@ fn resolve_conflict(mcr MultipleClassifierResults) string {
 			println('Plurality_vote')
 			return plurality_vote(infs)
 		}
-	
+
 		// test for a majority vote
 		if majority_vote(infs) != '' {
 			println('Majority vote')
 			return majority_vote(infs)
 		}
 		// println(mcr.results_by_classifier.map(it.results_by_radius.map(it.inferred_class_found.)))
-		sphere_index ++
-		if sphere_index >= mcr.max_sphere_index {break}
+		sphere_index++
+		if sphere_index >= mcr.max_sphere_index {
+			break
+		}
 	}
 	println('Majority vote fell through')
 	// pick the result with the greatest number of nearest neighbors

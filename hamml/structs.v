@@ -37,7 +37,7 @@ pub mut:
 	data                         [][]string
 	useful_continuous_attributes map[int][]f32
 	useful_discrete_attributes   map[int][]string
-	row_identifiers		[]string
+	row_identifiers              []string
 }
 
 struct Fold {
@@ -91,14 +91,14 @@ pub struct Classifier {
 	Parameters
 	Class
 pub mut:
-	struct_type        string = '.Classifier'
-	datafile_path      string
-	attribute_ordering []string
-	trained_attributes map[string]TrainedAttribute
+	struct_type              string = '.Classifier'
+	datafile_path            string
+	attribute_ordering       []string
+	trained_attributes       map[string]TrainedAttribute
 	maximum_hamming_distance int
-	indices            []int
-	instances          [][]u8
-	history            []HistoryEvent
+	indices                  []int
+	instances                [][]u8
+	history                  []HistoryEvent
 }
 
 struct HistoryEvent {
@@ -126,7 +126,7 @@ pub mut:
 	repetitions              int
 	random_pick              bool
 	balance_prevalences_flag bool
-	maximum_hamming_distance int 
+	maximum_hamming_distance int
 }
 
 struct DisplaySettings {
@@ -162,7 +162,7 @@ pub mut:
 	append_settings_flag                bool
 	command                             string
 	args                                []string
-	kagglefile_path		string
+	kagglefile_path                     string
 }
 
 pub struct MultipleClassifiersArray {
@@ -178,10 +178,10 @@ pub mut:
 
 pub struct MultipleOptions {
 pub mut:
-	break_on_all_flag   bool
-	combined_radii_flag bool
+	break_on_all_flag    bool
+	combined_radii_flag  bool
 	total_nn_counts_flag bool
-	classifier_indices  []int
+	classifier_indices   []int
 }
 
 struct RadiusResults {
@@ -336,9 +336,6 @@ pub mut:
 	path             string
 	testfile_path    string
 	pos_neg_classes  []string
-	folds            int
-	repetitions      int
-	random_pick      bool
 	array_of_results []CrossVerifyResult
 	accuracy_types   []string = ['raw accuracy', 'balanced accuracy']
 	analytics        []MaxSettings
@@ -360,7 +357,7 @@ pub mut:
 	struct_type                     string = '.ValidateResult'
 	datafile_path                   string
 	validate_file_path              string
-	row_identifiers		[]string
+	row_identifiers                 []string
 	inferred_classes                []string
 	counts                          [][]int
 	instances                       [][]u8

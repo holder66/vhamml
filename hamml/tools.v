@@ -411,7 +411,9 @@ fn get_map_key_for_max_value(m map[string]int) string {
 // plurality_vote returns the string whose count is greater
 // than the count of any other string in arr
 fn plurality_vote(arr []string) string {
-	if arr == [] { return '' }
+	if arr == [] {
+		return ''
+	}
 	// get the counts
 	counts := element_counts(arr).values()
 	max := array_max(counts)
@@ -422,15 +424,15 @@ fn plurality_vote(arr []string) string {
 	return ''
 }
 
-
 // majority_vote returns the string whose count is more than half
 // the total of counts in arr
 fn majority_vote(arr []string) string {
-	if arr == [] { return '' }
+	if arr == [] {
+		return ''
+	}
 	max := array_max(element_counts(arr).values())
 	if max * 2 > array_sum(element_counts(arr).values()) {
 		return get_map_key_for_max_value(element_counts(arr))
-	}	
+	}
 	return ''
 }
-

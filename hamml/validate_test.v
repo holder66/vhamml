@@ -58,8 +58,11 @@ fn test_kaggle() ! {
 	assert result.inferred_classes == ['f', 'f', 'f', 'm', 'm', 'm', 'f', 'f', 'm', 'f']
 	assert result.counts == [[1, 0], [1, 0], [1, 0], [0, 1], [0, 1],
 		[0, 1], [1, 0], [1, 0], [0, 1], [3, 0]]
-	content = os.read_lines(opts.kagglefile_path) or { panic('failed to open ${opts.kagglefile_path}') }
-	assert content == ['id,gender', '10,f', '11,f', '12,f', '13,m', '14,m', '15,m', '16,f', '17,f', '18,m', '19,f']
+	content = os.read_lines(opts.kagglefile_path) or {
+		panic('failed to open ${opts.kagglefile_path}')
+	}
+	assert content == ['id,gender', '10,f', '11,f', '12,f', '13,m', '14,m', '15,m', '16,f', '17,f',
+		'18,m', '19,f']
 	println('Done kaggle test')
 }
 

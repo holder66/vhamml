@@ -1,7 +1,7 @@
 // validate.v
 /*
 Given a classifier and a validation dataset, classifies each instance
-of the validation_set on the trained classifier; returns the predicted classes 
+of the validation_set on the trained classifier; returns the predicted classes
 for each instance of the validation_set.
 If a Kaggle file path is provided, a CSV file will be created with two columns.
 The first column is a row identifier, and is taken from the first column of
@@ -72,17 +72,18 @@ pub fn validate(cl Classifier, opts Options) !ValidateResult {
 	// println('opts.kagglefile_path: $opts.kagglefile_path')
 	if opts.kagglefile_path != '' {
 		// test if there is a metadata attribute as the first attribute (as row identifier)
-		if test_ds.attribute_types[0] != 'm' { 
+		if test_ds.attribute_types[0] != 'm' {
 			println('Validate failed: the file to be verified, "${opts.testfile_path}", does not have a metadata attribute in the first column, for use as a row identifier.')
-			exit(1)}
-		mut f := os.create(opts.kagglefile_path) or {
-    		panic('file not writeable')
-    	}
-    	f.writeln(test_ds.attribute_names[0] + ',' + validate_result.class_name) or {panic('write class name problem')}
-    	for i, result in validate_result.inferred_classes {
-    		// println(test_ds.row_identifiers[i] + ',' + result)
-    		f.writeln(test_ds.row_identifiers[i] + ',' + result) or {panic('write problem')}
-    	}
+			exit(1)
+		}
+		mut f := os.create(opts.kagglefile_path) or { panic('file not writeable') }
+		f.writeln(test_ds.attribute_names[0] + ',' + validate_result.class_name) or {
+			panic('write class name problem')
+		}
+		for i, result in validate_result.inferred_classes {
+			// println(test_ds.row_identifiers[i] + ',' + result)
+			f.writeln(test_ds.row_identifiers[i] + ',' + result) or { panic('write problem') }
+		}
 		f.close()
 	}
 	return validate_result

@@ -255,7 +255,7 @@ fn test_show_verify() ? {
 	// println('result two in show_test: $result')
 }
 
-// test_show_multiple_classifiers_options 
+// test_show_multiple_classifiers_options
 fn test_show_multiple_classifiers_options() ? {
 	println('\n\ntest_show_multiple_classifiers_options prints out a table showing the classifier settings for the chosen classifiers in a multiple classifier cross-validation or verification')
 	mut opts := Options{
