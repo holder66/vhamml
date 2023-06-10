@@ -31,6 +31,68 @@ fn testsuite_end() ? {
 // 	mut saved_cl := Classifier{}
 // }
 
+fn test_kaggle() ! {
+	mut opts := Options{
+		kagglefile_path: 'tempfolder3/kagglefile'
+		verbose_flag: false
+		show_flag: false
+		concurrency_flag: true
+	}
+	mut result := ValidateResult{}
+	mut test_result := ValidateResult{}
+	mut ds := Dataset{}
+	mut cl := Classifier{}
+	mut saved_cl := Classifier{}
+	mut content := []string{}
+
+	// test validate with a non-saved classifier
+	opts.command = 'validate'
+	opts.datafile_path = 'datasets/test.tab'
+	opts.testfile_path = 'datasets/test_validate.tab'
+	opts.classifierfile_path = ''
+	opts.bins = [2, 3]
+	opts.number_of_attributes = [2]
+	ds = load_file(opts.datafile_path)
+	cl = make_classifier(mut ds, opts)
+	result = validate(cl, opts)!
+	assert result.inferred_classes == ['f', 'f', 'f', 'm', 'm', 'm', 'f', 'f', 'm', 'f']
+	assert result.counts == [[1, 0], [1, 0], [1, 0], [0, 1], [0, 1],
+		[0, 1], [1, 0], [1, 0], [0, 1], [3, 0]]
+	content = os.read_lines(opts.kagglefile_path) or { panic('failed to open ${opts.kagglefile_path}') }
+	assert content == ['id,gender', '10,f', '11,f', '12,f', '13,m', '14,m', '15,m', '16,f', '17,f', '18,m', '19,f']
+	println('Done kaggle test')
+}
+
+// test_kaggle_fail attempts to use a file without a metadata attribute in the first column
+// fn test_kaggle_fail() ! {
+// 	mut opts := Options{
+// 		kagglefile_path: 'tempfolder3/kagglefile'
+// 		verbose_flag: false
+// 		show_flag: false
+// 		concurrency_flag: true
+// 	}
+// 	mut result := ValidateResult{}
+// 	mut test_result := ValidateResult{}
+// 	mut ds := Dataset{}
+// 	mut cl := Classifier{}
+// 	mut saved_cl := Classifier{}
+// 	mut content := []string{}
+
+// 	// test validate with a non-saved classifier
+// 	opts.command = 'validate'
+// 	opts.datafile_path = 'datasets/test.tab'
+// 	opts.testfile_path = 'datasets/test_verify.tab'
+// 	opts.classifierfile_path = ''
+// 	opts.bins = [2, 3]
+// 	opts.number_of_attributes = [2]
+// 	ds = load_file(opts.datafile_path)
+// 	cl = make_classifier(mut ds, opts)
+// 	// println(validate(cl, opts)!)
+// 	result = validate(cl, opts)!
+
+// 	println('Done kaggle fail test')
+// }
+
 // test_validate
 fn test_validate() ? {
 	mut opts := Options{
@@ -54,7 +116,7 @@ fn test_validate() ? {
 	opts.number_of_attributes = [2]
 	ds = load_file(opts.datafile_path)
 	cl = make_classifier(mut ds, opts)
-	result = validate(cl, opts)?
+	result = validate(cl, opts)!
 	assert result.inferred_classes == ['f', 'f', 'f', 'm', 'm', 'm', 'f', 'f', 'm', 'f']
 	assert result.counts == [[1, 0], [1, 0], [1, 0], [0, 1], [0, 1],
 		[0, 1], [1, 0], [1, 0], [0, 1], [3, 0]]
@@ -68,7 +130,7 @@ fn test_validate() ? {
 	opts.bins = [2, 4]
 	ds = load_file(opts.datafile_path)
 	cl = make_classifier(mut ds, opts)
-	result = validate(cl, opts)?
+	result = validate(cl, opts)!
 	assert result.inferred_classes == ['benign', 'benign', 'benign', 'benign', 'benign', 'malignant',
 		'benign', 'benign', 'benign', 'benign', 'benign', 'benign', 'benign', 'benign', 'benign',
 		'benign', 'benign', 'benign', 'benign', 'benign', 'benign', 'malignant', 'benign', 'benign',
@@ -122,7 +184,7 @@ fn test_validate() ? {
 	// repeat with weighting
 	opts.weighting_flag = true
 	cl = make_classifier(mut ds, opts)
-	result = validate(cl, opts)?
+	result = validate(cl, opts)!
 	assert result.inferred_classes == ['benign', 'benign', 'benign', 'benign', 'benign', 'malignant',
 		'benign', 'benign', 'benign', 'benign', 'benign', 'benign', 'benign', 'benign', 'benign',
 		'benign', 'benign', 'benign', 'benign', 'benign', 'benign', 'malignant', 'benign', 'benign',
@@ -190,7 +252,7 @@ fn test_validate() ? {
 	cl = make_classifier(mut ds, opts)
 	cl = Classifier{}
 	opts.classifierfile_path = opts.outputfile_path
-	result = validate(load_classifier_file(opts.classifierfile_path)?, opts)?
+	result = validate(load_classifier_file(opts.classifierfile_path)!, opts)!
 	assert result.inferred_classes == ['benign', 'benign', 'benign', 'benign', 'benign', 'malignant',
 		'benign', 'benign', 'benign', 'benign', 'benign', 'benign', 'benign', 'benign', 'benign',
 		'benign', 'benign', 'benign', 'benign', 'benign', 'benign', 'malignant', 'benign', 'benign',
@@ -260,13 +322,13 @@ fn test_validate() ? {
 	cl = make_classifier(mut ds, opts)
 	// reset the outputfile_path so that validate won't overwrite the classifier
 	opts.outputfile_path = ''
-	result = validate(cl, opts)?
+	result = validate(cl, opts)!
 	assert result.counts[0] == [12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 	s := result.inferred_classes[0..4]
 	assert s == ['diaporthe-stem-canker', 'diaporthe-stem-canker', 'diaporthe-stem-canker',
 		'diaporthe-stem-canker']
-	tcl := load_classifier_file('tempfolder3/classifierfile')?
-	test_result = validate(tcl, opts)?
+	tcl := load_classifier_file('tempfolder3/classifierfile')!
+	test_result = validate(tcl, opts)!
 
 	assert result.inferred_classes == test_result.inferred_classes
 	assert result.counts == test_result.counts

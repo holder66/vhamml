@@ -44,7 +44,7 @@ pub fn file_type(path string) string {
 //
 // Example:
 // `cl := load_classifier_file('tempfolder/saved_classifier.txt')`
-pub fn load_classifier_file(path string) ?Classifier {
+pub fn load_classifier_file(path string) !Classifier {
 	s := os.read_file(path.trim_space()) or { panic('failed to open ${path}') }
 	cl := json.decode(Classifier, s) or { panic('Failed to parse json') }
 	return cl
@@ -56,7 +56,7 @@ pub fn load_classifier_file(path string) ?Classifier {
 //
 // Example:
 // `instances := load_instances_file('tempfolder/saved_validate_result.txt')`
-pub fn load_instances_file(path string) ?ValidateResult {
+pub fn load_instances_file(path string) !ValidateResult {
 	// mut instances := ValidateResult{}
 	// mut s := ''
 	s := os.read_file(path.trim_space()) or { panic('failed to open ${path}') }
@@ -241,6 +241,10 @@ fn load_orange_newer_file(path string) Dataset {
 	ds.Class = set_class_struct(ds)
 	ds.useful_continuous_attributes = get_useful_continuous_attributes(ds)
 	ds.useful_discrete_attributes = get_useful_discrete_attributes(ds)
+	if ds.attribute_types[0] == 'm' {
+		ds.row_identifiers = ds.data[0]
+	}
+	// println(ds)
 	return ds
 }
 

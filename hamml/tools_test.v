@@ -167,6 +167,8 @@ fn test_lcm() {
 	assert lcm(arr) == 142089045253252578
 	arr = [5421, 5923, 6742, 5949, 5958, 6131, 5918]
 	assert lcm(arr) == 0
+	arr = [4684, 4132, 4072, 4401, 4351, 3795, 4063, 4188, 4177, 4137]
+	assert lcm(arr) == 0
 }
 
 // test_plurality_vote 

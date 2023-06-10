@@ -72,16 +72,9 @@ fn test_multiple_verify() ? {
 	opts.multiple_classify_options_file_path = opts.settingsfile_path
 	result = verify(opts)
 	// with both classifiers
-	assert result.confusion_matrix_map == {
-		'ALL': {
-			'ALL': 17.0
-			'AML': 3.0
-		}
-		'AML': {
-			'ALL': 6.0
-			'AML': 8.0
-		}
-	}
+	show_expanded_result(result)
+	assert result.confusion_matrix_map == {'ALL': {'ALL': 20.0, 'AML': 0.0}, 'AML': {'ALL': 7.0, 'AML': 7.0}}
+
 	opts.classifier_indices = [0]
 	result = verify(opts)
 	// with classifier 0

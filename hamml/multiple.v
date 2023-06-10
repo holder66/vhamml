@@ -96,6 +96,7 @@ fn multiple_classifier_classify(index int, classifiers []Classifier, instances_t
 			for i, row in hamming_dist_arrays {
 				// if we've already found an inferred class with this classifier, skip
 				// println('i: ${i} mcr.results_by_classifier[i].inferred_class: ${mcr.results_by_classifier[i].inferred_class}')
+				lcm_class_counts := classifiers[i].lcm_class_counts
 				if mcr.results_by_classifier[i].inferred_class == '' {
 					mut rr := RadiusResults{
 						sphere_index: sphere_index
@@ -112,7 +113,7 @@ fn multiple_classifier_classify(index int, classifiers []Classifier, instances_t
 									1
 								} else {
 									// println(int(i64(lcm(get_map_values(classifiers[i].class_counts))) / classifiers[i].class_counts[classifiers[i].classes[class_index]]))
-									int(i64(lcm(get_map_values(classifiers[i].class_counts))) / classifiers[i].class_counts[classifiers[i].classes[class_index]])
+									int(lcm_class_counts / classifiers[i].class_counts[classifiers[i].classes[class_index]])
 									// 1
 								}
 							}
